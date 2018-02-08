@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 var morgan = require('morgan')
+const cors = require('cors')
 
 app.use(bodyParser.json())
-app.use(morgan('tiny'))
+app.use(morgan('tiny')) // HUOM!! 3.8 puuttuu!
+app.use(cors())
 
 let persons = [
       {
