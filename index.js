@@ -45,21 +45,12 @@ app.post('/api/persons', (request, response) => {
   person
     .save()
     .then(person => {
-      response.json(formatPerson(person))
+      response.json(Person.format(person))
     })
     .catch(error => {
       console.log(error)
     })
 })
-
-//TÄMÄ STAATTISEKSI 3.14
-const formatPerson = (person) => {
-  return {
-    name: person.name,
-    number: person.number,
-    id: person._id
-  }
-}
 
 app.get('/info', (req, res) => {
   const date = new Date()
@@ -73,7 +64,7 @@ app.get('/api/persons', (req, res) => {
   Person
     .find({})
     .then(persons => {
-      res.json(persons.map(formatPerson))
+      res.json(persons.map(Person.format))
     })
     .catch(error => {
       console.log(error)
@@ -92,7 +83,7 @@ app.put('/api/persons/:id', (request, response) => {
   Person
     .findByIdAndUpdate(request.params.id, person, { new: true })
     .then(person => {
-      response.json(formatPerson(person))
+      response.json(Person.format(person))
     })
     .catch(error => {
       console.log(error)
@@ -116,7 +107,7 @@ app.get('/api/persons/:id', (request, response) => {
     .findById(request.params.id)
     .then(person => {
       if (person) {
-        response.json(formatPerson(person))
+        response.json(Person.format(person))
       } else {
         response.status(404).end()
       }
